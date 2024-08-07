@@ -1,11 +1,13 @@
 package com.example.mediconnect.feature.screens
 
 import android.util.Log
+import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mediconnect.domain.entities.Comments
 import com.example.mediconnect.domain.entities.Rate
+import com.example.mediconnect.domain.entities.TopicRapport
 import com.example.mediconnect.domain.entities.Topics
 import com.example.mediconnect.domain.usecase.GetListRateUseCase
 import com.example.mediconnect.domain.usecase.GetListTopicUseCase
@@ -37,6 +39,9 @@ class HistoryViewModel @Inject constructor(
             listTopicsById.update {
                 getTopicByIdUseCase.execute(userId)?.results ?: emptyList()
             }
+            val s = listTopicsById.value.size
+            Log.i("getTopicByIdUseCase", "getListTopics: $s")
+
         }
     }
 
@@ -58,7 +63,9 @@ class HistoryViewModel @Inject constructor(
     fun getTopicsDetail(list: List<Topics>, searchHistory: String) {
         val allSubject = mutableListOf<String>()
         Log.i("searchHistory", "getTopicsDetail: ${forToday.value}")
-        if (forToday.value) {
+        Log.i("greklnhgje", "getTopicsDetail: $list")
+
+        /*if (forToday.value) {
             list.mapIndexed { index, topics ->
                 if (topics.dateWork == getCurrentDate()) {
                     val subject = "${topics.title} : ${topics.nbHour} hours"
@@ -70,11 +77,37 @@ class HistoryViewModel @Inject constructor(
                 val subject = "${topics.title} : ${topics.nbHour} hours"
                 allSubject.add(subject)
             }
+        }*/
+
+        val ss = list.groupBy { it.title }
+
+
+        if (forToday.value) {
+            for ((key, value) in ss) {
+                var iCount = 0
+                Log.i("hahivalurssea", "getTopicsDetail: $value")
+                value.map { topics ->
+                    if (topics.dateWork == getCurrentDate()) {
+                        iCount += topics.nbHour ?: 0
+                    }
+                }
+                val subject = "$key : $iCount hours"
+                allSubject.add(subject)
+            }
+
+        } else {
+            for ((key, value) in ss) {
+                var iCount = 0
+                value.map { topics ->
+                    iCount += topics.nbHour ?: 0
+                }
+                val subject = "$key : $iCount hours"
+                allSubject.add(subject)
+            }
         }
 
         val s = if (searchHistory.isNotEmpty()) allSubject.filter { txt -> txt.contains(searchHistory, true) }
         else allSubject
-
 
         listNameTopics.update {
             s

@@ -28,6 +28,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -77,7 +78,12 @@ fun HistoryScreen(navController: NavController) {
     val comments by authViewModel.comments.collectAsStateWithLifecycle()
     val rateRoom by authViewModel.listRateById.collectAsStateWithLifecycle()
 
-    authViewModel.getListTopics("2019-A-0044")
+    LaunchedEffect(user) {
+        if (user != null) {
+            authViewModel.getListTopics(user.id)
+        }
+    }
+
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 

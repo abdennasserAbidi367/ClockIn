@@ -28,9 +28,14 @@ class ScanViewModel @Inject constructor(
 
     fun getUserById(id: String) {
         viewModelScope.launch {
+            val s = getUserUseCase.execute(id) ?: emptyList()
+
             users.update {
                 getUserUseCase.execute(id) ?: emptyList()
             }
+            Log.i("userRole", "ChooseSubjectScreen: ${users.value}")
+
+
         }
     }
 

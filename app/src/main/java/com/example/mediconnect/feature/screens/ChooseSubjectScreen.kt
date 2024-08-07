@@ -103,8 +103,6 @@ fun ChooseSubjectScreen(navController: NavController) {
 
     authViewModel.getAllUser()
 
-    Log.i("detailCode", "ChooseSubjectScreen: $detail")
-
     var toScann by remember { mutableStateOf(false) }
 
     var code by remember { mutableStateOf("") }
@@ -236,6 +234,7 @@ fun ChooseSubjectScreen(navController: NavController) {
                         .background(colorResource(id = R.color.purple_200))
                         .fillMaxWidth(0.8f)
                         .clickable {
+                            Log.i("userRole", "ChooseSubjectScreen: $user")
 
                             if (user.isNotEmpty()) {
                                 val u = Gson().toJson(user[0])
