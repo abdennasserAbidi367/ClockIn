@@ -172,7 +172,10 @@ fun ChooseSubjectScreen(navController: NavController) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "",
-                modifier = Modifier.height(100.dp).width(100.dp).padding(top = 20.dp)
+                modifier = Modifier
+                    .height(100.dp)
+                    .width(100.dp)
+                    .padding(top = 20.dp)
             )
 
             Column(
@@ -398,7 +401,6 @@ fun getUserId(listId: List<User>): List<String> {
 fun getListId(current: Context): List<User> {
 
     val userAdmin = User(id = "admin", username = "Ala", role = "admin")
-//TODO("when add or change in the file what should i do")
     val listId = mutableListOf<User>()
 
     val s = loadRHJSONFromAsset(current)
@@ -409,6 +411,7 @@ fun getListId(current: Context): List<User> {
         val username = myRow.getCell(0).stringCellValue
         val id = myRow.getCell(1).stringCellValue
         if (id.isNotEmpty()) {
+            Log.i("idhezbgfhe", "getListId: $id")
             val user = User(
                 username = username,
                 role = "simple",
@@ -424,7 +427,7 @@ fun getListId(current: Context): List<User> {
 
 fun loadRHJSONFromAsset(current: Context): InputStream? {
     return try {
-        val inputStream: InputStream = current.assets.open("rh.xls")
+        val inputStream: InputStream = current.assets.open("identifiant.xls")
         val size: Int = inputStream.available()
         val buffer = ByteArray(size)
         //inputStream.read(buffer)
@@ -439,7 +442,7 @@ fun loadRHJSONFromAsset(current: Context): InputStream? {
 
 fun loadBookJSONFromAsset(current: Context): InputStream? {
     return try {
-        val inputStream: InputStream = current.assets.open("Book1.xls")
+        val inputStream: InputStream = current.assets.open("Subjects.xls")
         val size: Int = inputStream.available()
         val buffer = ByteArray(size)
         //inputStream.read(buffer)

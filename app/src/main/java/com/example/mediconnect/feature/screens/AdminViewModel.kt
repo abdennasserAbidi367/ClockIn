@@ -1,5 +1,6 @@
 package com.example.mediconnect.feature.screens
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -59,7 +60,7 @@ class AdminViewModel @Inject constructor(
                 tr.workedUser = workedUser
                 listRapportTopic.add(tr)
             }
-
+            Log.i("listRapportTopic", "getListTopics: $listRapportTopic")
             listTopicsRapport.update {
                 listRapportTopic
             }

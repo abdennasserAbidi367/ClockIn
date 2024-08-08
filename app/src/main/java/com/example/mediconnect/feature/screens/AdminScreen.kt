@@ -72,7 +72,6 @@ fun AdminScreen(navController: NavController) {
     val listTopicsRapport by authViewModel.listTopicsRapport.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-//TODO("change word AAAAAA with admin")
     /*BackHandler {
         navController.popBackStack()
     }*/
