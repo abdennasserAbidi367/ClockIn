@@ -264,7 +264,12 @@ class TopicsViewModel @Inject constructor(private val saveTopicUseCase: SaveTopi
             Topics(6, "frzgrzg", isChecked = false))
     )
 
+    val normalList = MutableStateFlow<List<Topics>>(emptyList())
+
     fun changeTopics(list: List<Topics>) {
+        normalList.update {
+            list
+        }
         sq.update {
             list
         }
@@ -279,22 +284,18 @@ class TopicsViewModel @Inject constructor(private val saveTopicUseCase: SaveTopi
     }
 
     fun search(word: String) {
-        var listWord = listOf<Topics>()
+        var listWord: List<Topics>
         if (word.isEmpty()) {
             sq.update {
-                listOf(Topics(1, "Thrust Reverser RH", isChecked = false),
-                    Topics(2, "Randome", isChecked = false),
-                    Topics(3, "FSM", isChecked = false),
-                    Topics(4, "Nacelle", isChecked = false),
-                    Topics(5, "cdscvs", isChecked = false),
-                    Topics(6, "frzgrzg", isChecked = false))
+                normalList.value
             }
-        }
-        sq.update {
-            listWord = it.filter { topic ->
-                topic.title?.contains(word) == true
+        } else {
+            sq.update {
+                listWord = it.filter { topic ->
+                    topic.title?.contains(word) == true
+                }
+                listWord
             }
-            listWord
         }
     }
 

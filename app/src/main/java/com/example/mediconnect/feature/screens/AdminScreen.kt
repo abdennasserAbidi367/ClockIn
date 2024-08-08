@@ -72,7 +72,7 @@ fun AdminScreen(navController: NavController) {
     val listTopicsRapport by authViewModel.listTopicsRapport.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-
+//TODO("change word AAAAAA with admin")
     /*BackHandler {
         navController.popBackStack()
     }*/
@@ -113,6 +113,7 @@ fun AdminScreen(navController: NavController) {
             scrollBehavior = scrollBehavior,
         )
     }, bottomBar = {
+        //TODO("2 buttons same width")
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -121,6 +122,7 @@ fun AdminScreen(navController: NavController) {
             Box(
                 modifier = Modifier
                     .padding(start = 10.dp)
+                    .weight(0.5f)
                     .clip(RectangleShape)
                     .background(colorResource(id = R.color.purple_200))
                     .fillMaxWidth(0.4f)
@@ -142,6 +144,7 @@ fun AdminScreen(navController: NavController) {
             Box(
                 modifier = Modifier
                     .padding(start = 10.dp)
+                    .weight(0.5f)
                     .clip(RectangleShape)
                     .background(colorResource(id = R.color.purple_200))
                     .clickable {

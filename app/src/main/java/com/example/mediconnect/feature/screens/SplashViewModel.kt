@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mediconnect.domain.entities.User
-import com.example.mediconnect.domain.usecase.ClearUserUseCase
 import com.example.mediconnect.domain.usecase.GetListUserUseCase
 import com.example.mediconnect.domain.usecase.SaveUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

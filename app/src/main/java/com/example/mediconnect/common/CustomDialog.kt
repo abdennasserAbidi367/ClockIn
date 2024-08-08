@@ -12,8 +12,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,19 +30,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.example.mediconnect.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomDialog(
     isSuccess: Boolean,
     message: String,
-    setShowDialog: (Boolean) -> Unit) {
+    setShowDialog: (Boolean) -> Unit
+) {
 
-    val color = if (isSuccess) colorResource(id = R.color.purple_200) else colorResource(android.R.color.holo_red_dark)
+    val color =
+        if (isSuccess) colorResource(id = R.color.purple_200) else colorResource(android.R.color.holo_red_dark)
     val title = if (isSuccess) "Success" else "Error"
     val icon = if (isSuccess) Icons.Default.Check else Icons.Default.Info
 
-    Dialog(onDismissRequest = { setShowDialog(false) }) {
+    Dialog(properties = DialogProperties(
+        dismissOnClickOutside = true,
+        dismissOnBackPress = false,
+    ), onDismissRequest = {
+        setShowDialog(false)
+    }) {
         Surface(
             shape = RoundedCornerShape(16.dp),
             color = Color.White

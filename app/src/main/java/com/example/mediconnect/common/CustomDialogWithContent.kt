@@ -38,7 +38,7 @@ fun CustomDialogWithContent(setShowDialog: (Boolean, String) -> Unit) {
     val radioOptions = listOf("In", "Out")
     var selectedOption by remember { mutableStateOf(radioOptions[0]) }
 
-    Dialog(onDismissRequest = {  }) {
+    Dialog(onDismissRequest = { setShowDialog(false, "") }) {
         Surface(
             shape = RoundedCornerShape(16.dp),
             color = Color.White

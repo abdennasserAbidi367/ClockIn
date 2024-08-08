@@ -175,69 +175,71 @@ fun ChooseTopicScreen(navController: NavController) {
         )
     },
         bottomBar = {
-        if (step2) {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(end = 10.dp, bottom = 10.dp)) {
-                Box(
+            if (step2) {
+                Row(
                     modifier = Modifier
-                        .padding(start = 10.dp)
-                        .clip(RectangleShape)
-                        .background(colorResource(id = R.color.purple_200))
-                        .fillMaxWidth(0.4f)
-                        .clickable {
-                            val listTop = mutableListOf<Topics>()
-                            listTopics.value.mapIndexed { index, topics ->
-                                val sdf = SimpleDateFormat("dd/M/yyyy")
-                                val currentDate = sdf.format(Date())
-                                val topic = Topics(
-                                    id = topics.id,
-                                    title = topics.title,
-                                    hourStart = hourStartState[index],
-                                    hourEnd = hourEndState[index],
-                                    nbHour = durations[index].toInt(),
-                                    dateWork = currentDate,
-                                    idUser = user.id
-                                )
-                                listTop.add(topic)
-                                authViewModel.saveTopics(topic)
-                                authViewModel.saveListTopics(topic)
-                            }
-                            authViewModel.updateStep2()
-                        }
+                        .fillMaxWidth()
+                        .padding(end = 10.dp, bottom = 10.dp)
                 ) {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 15.dp),
-                        text = "Confirm",
-                        color = Color.White,
-                        textAlign = TextAlign.Center
-                    )
-                }
 
-                Box(
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                        .clip(RectangleShape)
-                        .background(colorResource(id = R.color.purple_200))
-                        .clickable {
-                            authViewModel.clearDataBase()
-                            authViewModel.resetSteps()
-                        }
-                ) {
-                    Text(
+                    Box(
+                        modifier = Modifier.fillMaxWidth(0.6f)
+                            .padding(start = 10.dp)
+                            .clip(RectangleShape)
+                            .background(colorResource(id = R.color.purple_200))
+                            .clickable {
+                                authViewModel.clearDataBase()
+                                authViewModel.resetSteps()
+                            }
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 15.dp),
+                            text = "Update the informations",
+                            color = Color.White,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 15.dp),
-                        text = "Update the informations",
-                        color = Color.White,
-                        textAlign = TextAlign.Center
-                    )
+                            .padding(start = 10.dp)
+                            .clip(RectangleShape)
+                            .background(colorResource(id = R.color.purple_200))
+                            .clickable {
+                                val listTop = mutableListOf<Topics>()
+                                listTopics.value.mapIndexed { index, topics ->
+                                    val sdf = SimpleDateFormat("dd/M/yyyy")
+                                    val currentDate = sdf.format(Date())
+                                    val topic = Topics(
+                                        id = topics.id,
+                                        title = topics.title,
+                                        hourStart = hourStartState[index],
+                                        hourEnd = hourEndState[index],
+                                        nbHour = durations[index].toInt(),
+                                        dateWork = currentDate,
+                                        idUser = user.id
+                                    )
+                                    listTop.add(topic)
+                                    authViewModel.saveTopics(topic)
+                                    authViewModel.saveListTopics(topic)
+                                }
+                                authViewModel.updateStep2()
+                            }
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 15.dp),
+                            text = "Confirm",
+                            color = Color.White,
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
             }
-        }
-    }) { padding ->
+        }) { padding ->
 
         if (isPopupShowed.value) {
             CustomDialog(true, "you have successfully chosen the topics") {
@@ -396,7 +398,7 @@ fun ChooseTopicScreen(navController: NavController) {
                 val showIndex = remember { mutableStateOf(0) }
 
                 if (toUpdate.value) {
-                    Dialog(onDismissRequest = {  }) {
+                    Dialog(onDismissRequest = { }) {
                         Surface(
                             shape = RoundedCornerShape(16.dp),
                             color = Color.White
@@ -420,11 +422,12 @@ fun ChooseTopicScreen(navController: NavController) {
                                         )
                                     )
 
-                                    Row(modifier = Modifier.padding(top = 15.dp),
+                                    Row(
+                                        modifier = Modifier.padding(top = 15.dp),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Text(text = "Duration : ")
-                                        
+
                                         TextField(modifier = Modifier
                                             .padding(8.dp)
                                             .border(
@@ -433,10 +436,10 @@ fun ChooseTopicScreen(navController: NavController) {
                                                     colorResource(id = R.color.purple_200)
                                                 ),
                                                 shape = RoundedCornerShape(4.dp)
-                                            ),value = clickDuration.value, onValueChange = {
+                                            ), value = clickDuration.value, onValueChange = {
                                             clickDuration.value = it
                                         })
-                                        
+
                                         /*CustomDropdownMenu(
                                             list = timeOfTheDay,
                                             defaultSelected = clickHourStart.value,
@@ -468,12 +471,22 @@ fun ChooseTopicScreen(navController: NavController) {
                                     Box(modifier = Modifier.padding(40.dp, 10.dp, 40.dp, 0.dp)) {
                                         Button(
                                             onClick = {
-                                                authViewModel.changeDuration(clickDuration.value, keepIndex.value)
+                                                authViewModel.changeDuration(
+                                                    clickDuration.value,
+                                                    keepIndex.value
+                                                )
                                                 toUpdate.value = false
-                                                Log.i("hourss", "ChooseTopicScreen: ${keepIndex.value}")
+                                                Log.i(
+                                                    "hourss",
+                                                    "ChooseTopicScreen: ${keepIndex.value}"
+                                                )
                                             },
                                             shape = RoundedCornerShape(50.dp),
-                                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.purple_200)),
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = colorResource(
+                                                    id = R.color.purple_200
+                                                )
+                                            ),
                                             modifier = Modifier
                                                 .fillMaxWidth(1.5f)
                                                 .height(50.dp)
@@ -487,9 +500,11 @@ fun ChooseTopicScreen(navController: NavController) {
                     }
                 }
 
-                LazyColumn(modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 50.dp)) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 50.dp)
+                ) {
                     itemsIndexed(
                         items = listTopicsTitle,
                         key = { i, dr ->
@@ -552,24 +567,29 @@ fun ChooseTopicScreen(navController: NavController) {
                                                 colorResource(id = R.color.purple_200)
                                             ),
                                             shape = RoundedCornerShape(4.dp)
-                                        )) {
+                                        )
+                                ) {
                                     Text(
                                         modifier = Modifier.padding(top = 20.dp, start = 20.dp),
                                         text = "You worked in this subject :"
                                     )
 
                                     Row(
-                                        modifier = Modifier.padding(top = 20.dp, start = 20.dp)) {
+                                        modifier = Modifier.padding(top = 20.dp, start = 20.dp)
+                                    ) {
 
-                                        val countStart = if (index == showIndex.value) hourStartState[showIndex.value]
-                                        else hourStartState[index]
+                                        val countStart =
+                                            if (index == showIndex.value) hourStartState[showIndex.value]
+                                            else hourStartState[index]
 
-                                        val countEnd = if (index == showIndex.value) hourEndState[showIndex.value]
-                                        else hourEndState[index]
-                                        
-                                        val countDuration = if (index == showIndex.value) durations[showIndex.value]
-                                        else durations[index]
-                                        
+                                        val countEnd =
+                                            if (index == showIndex.value) hourEndState[showIndex.value]
+                                            else hourEndState[index]
+
+                                        val countDuration =
+                                            if (index == showIndex.value) durations[showIndex.value]
+                                            else durations[index]
+
                                         Text(text = "Duration : $countDuration heurs")
                                         /*Text(
                                             text = "To :  $countEnd",
@@ -644,9 +664,11 @@ fun ChooseTopicScreen(navController: NavController) {
                     }*/
                 }
 
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 30.dp, start = 20.dp, end = 20.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 30.dp, start = 20.dp, end = 20.dp)
+                )
                 {
                     val allSubject = authViewModel.getTopicsDetail(listTopicsById)
                     Log.i("allSubject", "ChooseTopicScreen: $allSubject")
